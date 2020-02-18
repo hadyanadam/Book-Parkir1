@@ -15,7 +15,7 @@ def index(request):
 
 		parkir_instance = Parkir.objects.get(booking_place=booking_place)
 		print(parkir_instance)
-		DT = datetime.datetime.now() + datetime.timedelta(hours=2)
+		DT = datetime.datetime.now() + datetime.timedelta(minutes=10)
 		new_DT = DT.strftime("%b %d, %Y %H:%M:%S")
 		try:
 			deadline = DeadlineParkir(parkir=parkir_instance,deadline=new_DT)
