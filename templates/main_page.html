@@ -33,7 +33,7 @@
 			{% if obj.book_status == False %}
 			<form method="POST">
 			{% csrf_token %}	
-				<input type="submit" class="btn btn-primary" style="margin-left:35px" name="booking_place" value="Book A1">
+				<input type="submit" class="btn btn-primary" style="margin-left:35px" name="booking_place" value="{{obj.booking_place}}">
 			</form>
 
 			{% else %}

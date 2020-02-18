@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.utils import IntegrityError
 from api.forms import ParkirForms, SaldoForms
 from api.models import Parkir, Saldo, DeadlineParkir
 from django.contrib.auth import login, authenticate
@@ -16,9 +17,13 @@ def index(request):
 		print(parkir_instance)
 		DT = datetime.datetime.now() + datetime.timedelta(hours=2)
 		new_DT = DT.strftime("%b %d, %Y %H:%M:%S")
-		deadline = DeadlineParkir(parkir=parkir_instance,deadline=new_DT)
-		deadline.save()
-
+		try:
+			deadline = DeadlineParkir(parkir=parkir_instance,deadline=new_DT)
+			deadline.save()
+		except IntegrityError:
+			deadline = DeadlineParkir.objects.get(parkir=parkir_instance)
+			deadline.deadline = new_DT
+			deadline.save()
 		form = ParkirForms(request.POST or None, instance=parkir_instance)
 		if(form.is_valid()):
 			# print(form.fields)
@@ -69,8 +74,10 @@ def signup(request):
 			username = form.cleaned_data.get('username')
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=username, password=raw_password)
+			saldo = Saldo(user = user)
+			saldo.save()
 			login(request, user)
-			return redirect('home')
+			return redirect('/')
 	else:
 		form = SignUpForm()
 	context = {
@@ -112,6 +119,7 @@ def recharge(request):
 def booking_true(request):
 	try:
 		parkir = Parkir.objects.get(user=request.user)
+		print(parkir)
 	except:
 		return redirect('/')
 	print(parkir)
