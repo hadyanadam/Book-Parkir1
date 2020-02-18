@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+<h1 class="display-4">{{heading}}</h1>
+<p class="lead">{{subheading}}</p>
+{% endblock header %}
+
+
+{% block content %}
+<div class="container">
+    <h2 class="text-dark">Silahkan Isi Saldo Anda</h2>
+    <h2 class="text-dark">Sisa saldo: {{ saldo }}</h2>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ formset.as_p }}
+    <input type="submit" class="btn btn-secondary" value="Submit"></input>
+    </form>
+</div>
+
+{% endblock content %}
+
+
+{% block footer%}
+
+<footer class="footer" style="margin-top: 50px;">
+		<div class="container">
+			<p class="text-muted">Situs ini di develop menggunakan Django-Framework.</p>
+		</div>
+</footer>
+{% endblock footer%}

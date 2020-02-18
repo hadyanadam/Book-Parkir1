@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+	{% include 'snippets/styles.html' %}
+</head>
+<body>
+{% load static %}
+
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark" id="myNav">
+
+    <a class="navbar-brand" href="#">
+        <!-- <img style="height:30px "src="{% static "img/logo.png" %}" alt=""> -->
+        <h5>Booking Parkir</h5>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></s pan>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+          {% block home %}
+            <li class="nav-item">
+                <a class="nav-link text-light" href="/" title="">Home</a>
+            </li>
+          {% endblock home %}
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link text-warning">{{ saldo }}</a></li>
+            <li class="nav-item"><a class="nav-link btn text-dark btn-warning" href="{% url 'recharge' %}">
+              Isi Saldo</a>
+            </li>
+            <li class="nav-item"><a class="nav-link text-muted">{{ user.get_username }}</a></li>
+            <li class="nav-item"><a class="nav-link text-light"href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>   
+            {% else %}
+            <li class="nav-item"><a class="nav-link text-light"href="{% url 'login'%}?next={{request.path}}">Login</a></li>   
+            <li class="nav-item"><a class="nav-link text-light"href="{% url 'signup'%}?next={{request.path}}">Signup</a></li>
+            {% endif %} 
+      </ul>
+     
+    </div>
+  </nav>
+
+  
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container text-black text-center" style="margin-top: 10px;">
+        
+        {% block header %}
+            
+	        <h1 class="display-4">Template</h1>
+            <h2 class="lead">Header dan Subheader</h2>
+
+        {% endblock header %}
+
+	  </div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="container bg-white text-dark shadow "
+		id="myBody" >
+                
+            {% block content %}
+                <div class="row" style="height:500px;">
+				    <h1>content1</h1>
+			    </div>
+            {% endblock content %}
+                    
+		</div>
+
+	</div>
+	
+	{% include 'snippets/Scripts.html' %}
+</body>
+
+{% block footer%}
+
+{% endblock footer%}
+</html>

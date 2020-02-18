@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+<h1 class="display-4">{{heading}}</h1>
+<p class="lead">{{subheading}}</p>
+{% endblock header %}
+
+{% block home %}
+
+<li class="nav-item">
+	<a class="nav-link text-light" href="{% url 'book_status' %}" title="">Home</a>
+</li>
+{% endblock home %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+ 	<div class="col-5 text-center">
+			<h2 style="margin-left: 70px">{{ parkir.booking_place }}</h2>
+				<img src="{{ icon_x }}" alt="No 1" style="height:200px;width:150px">			
+			<br>
+			
+			<div id='demo' style='margin-left: 20px;margin-top:20px'>
+						
+			<script> 
+			function getCookie(c_name)
+			{
+				if (document.cookie.length > 0)
+				{
+					c_start = document.cookie.indexOf(c_name + "=");
+					if (c_start != -1)
+					{
+						c_start = c_start + c_name.length + 1;
+						c_end = document.cookie.indexOf(";", c_start);
+						if (c_end == -1) c_end = document.cookie.length;
+						return unescape(document.cookie.substring(c_start,c_end));
+					}
+				}
+				return "";
+			}
+				var deadline = new Date('{{ batas.deadline }}').getTime(); 
+				console.log(deadline);
+				var x = setInterval(function() { 
+				var now = new Date().getTime(); 
+				var t = deadline - now; 
+				var days = Math.floor(t / (1000 * 60 * 60 * 24)); 
+				var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60)); 
+				var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)); 
+				var seconds = Math.floor((t % (1000 * 60)) / 1000); 
+				document.getElementById("demo").innerHTML = days + "d "  
+				+ hours + "h " + minutes + "m " + seconds + "s ";
+				var booking_place = "{{ parkir.booking_place }}";
+				
+					if (t < 0) { 	
+						clearInterval(x); 
+						document.getElementById("demo").innerHTML = "EXPIRED";
+						$.ajax({
+							url:'{% url 'update_time' %}',
+							type: "POST",
+							headers: { "X-CSRFToken": getCookie("csrftoken")},
+							data: {	time : "EXPIRED",
+									booking_place : booking_place
+									},
+							success:function(response){},
+							complete:function(){},
+							error:function (xhr, textStatus, thrownError){}
+						});
+					} 
+				}, 1000); 
+			</script> 
+			</div>
+          
+</div>
+  
+ 	<div class="col-6 align-self-center">
+		<ul class="list-group">
+			<li class="list-group-item list-group-item-warning">Biaya Parkir Rp. 5000</li>
+			<li class="list-group-item list-group-item-info">Untuk Masuk dan Keluar silahkan tap kartu anda!</li>
+		  </ul>
+    </div>
+</div>
+
+
+
+
+</div>
+
+{% endblock content %}
+
+
+{% block footer%}
+
+<footer class="footer" style="margin-top: 50px;">
+		<div class="container">
+			<p class="text-muted">Situs ini di develop menggunakan Django-Framework.</p>
+		</div>
+</footer>
+{% endblock footer%}
