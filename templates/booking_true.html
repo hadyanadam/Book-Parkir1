@@ -52,15 +52,15 @@
 				+ hours + "h " + minutes + "m " + seconds + "s ";
 				var booking_place = "{{ parkir.booking_place }}";
 				
-					if (t < 0) { 	
-						clearInterval(x); 
-						document.getElementById("demo").innerHTML = "EXPIRED";
+					if (t < 0) {
+						clearInterval(x);
 						$.ajax({
-							url:'{% url 'update_time' %}',
-							type: "POST",
-							headers: { "X-CSRFToken": getCookie("csrftoken")},
-							data: {	time : "EXPIRED",
-									booking_place : booking_place
+							url:"{% url 'parkir_detail' parkir.booking_place %}",
+							type: "PUT",
+							headers: { "X-Content-Type": "application/json"},
+							data: {	"user": "others",
+									"booking_place": "{{ parkir.booking_place }}",
+									"book_status": false
 									},
 							success:function(response){},
 							complete:function(){},

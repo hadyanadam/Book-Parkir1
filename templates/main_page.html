@@ -41,50 +41,7 @@
 			{% endif %}
 			</div>
 	{% endfor %}
-		
-{% comment %} 
-		<div class="col-md-3">
-				<h2 style="margin-left: 70px">A2</h2>
-				{% if A2.book_status == False %}
 
-					<img src="{{ icon }}" alt="No 1" style="height:200px;width:150px">
-
-				{% else %}
-					<img src="{{ icon_x }}" alt="No 1" style="height:200px;width:150px">
-
-				{% endif %}
-				<br>
-			{% if A2.book_status == False %}
-			<form method="POST">
-			{% csrf_token %}	
-				<input type="submit" class="btn btn-primary" style="margin-left:35px" name="booking_place" value="Book A2">
-			</form>
-			{% else %}
-				<div class='text-muted'>Sudah dibooking</div>
-			{% endif %}
-			
-		</div>
-			
-		<div class="col-md-3">
-				<h2 style="margin-left: 70px">A3 </h2>
-				{% if A3.book_status == False %}
-
-					<img src="{{ icon }}" alt="No 1" style="height:200px;width:150px">
-
-				{% else %}
-					<img src="{{ icon_x }}" alt="No 1" style="height:200px;width:150px">
-
-				{% endif %}
-			<br>
-			{% if A3.book_status == False %}
-			<form method="POST">
-			{% csrf_token %}	
-				<input type="submit" class="btn btn-primary" style="margin-left:35px" name="booking_place" value="Book A3">
-			</form>
-			{% else %}
-				<div class='text-muted'>Sudah dibooking</div>
-			{% endif %}
-		</div> {% endcomment %}
 	</div>
 </div>
 
