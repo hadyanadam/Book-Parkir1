@@ -62,14 +62,20 @@
 									"booking_place": "{{ parkir.booking_place }}",
 									"book_status": false
 									},
-							success:function(response){},
+							success:function(response){window.location.replace("{% url 'index' %}");},
 							complete:function(){},
 							error:function (xhr, textStatus, thrownError){}
 						});
+<<<<<<< HEAD
 					window.location.replace("{% url 'index' %}");
 					}
 				}, 1000);
 			</script>
+=======
+					}
+				}, 1000); 
+			</script> 
+>>>>>>> development
 			</div>
 </div>
   
