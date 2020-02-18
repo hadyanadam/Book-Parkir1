@@ -12,7 +12,7 @@ class Parkir(models.Model):
     
 class Saldo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null= True)
-    saldo = models.IntegerField(default = 100000)
+    saldo = models.IntegerField(default = 0)
     def __str__(self):
         return f"Rp. {self.saldo}"
     
