@@ -2,18 +2,24 @@ from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.utils import IntegrityError
 from api.forms import ParkirForms, SaldoForms
-from api.models import Parkir, Saldo, DeadlineParkir
+from api.models import Parkir, Saldo, DeadlineParkir, BookingTime
 from django.contrib.auth import login, authenticate
+from itertools import zip_longest
 import datetime
+import pytz
 from .forms import SignUpForm
 
 @login_required(login_url='/accounts/login/')
 def index(request):
-	if(request.method == 'POST'):
+	if request.method == 'POST':
 		booking_place = request.POST.get('booking_place')
 		print(booking_place)
-
-		parkir_instance = Parkir.objects.get(booking_place=booking_place)
+		tanggal_booking = request.POST.get('tanggal_booking')
+		print(tanggal_booking)
+		waktu_instance = BookingTime.objects.get(parkir__booking_place=booking_place)
+		waktu_instance.waktu_booking = tanggal_booking
+		waktu_instance.save()
+		parkir_instance = Parkir.objects.get(waktu_booking=waktu_instance)
 		print(parkir_instance)
 		DT = datetime.datetime.now() + datetime.timedelta(minutes=10)
 		new_DT = DT.strftime("%b %d, %Y %H:%M:%S")
@@ -38,21 +44,50 @@ def index(request):
 			if saldo_val < 0:
 				return HttpResponse('<html><body><h1>Saldo Tidak Mencukupi</h1><h1>Silahkan isi saldo</h1><a href="/">Back</a></body></html>')
 			else:
+				waktu_validate = BookingTime.objects.get(parkir__booking_place=booking_place)
 				value_saldo.save()
 				form.save()
-				return redirect('book_status/')
+				if waktu_validate.waktu_booking < datetime.datetime.now(pytz.utc):
+					return redirect('book_status/')
+				else:
+					return redirect('/')
 	parkir_objek= Parkir.objects.all().order_by("booking_place")
+	waktu_objek = BookingTime.objects.all().order_by('id')
+	deadline_objek = DeadlineParkir.objects.all().order_by('id')
+	validate_booking = list()
+	for obj in deadline_objek:
+		deadline = datetime.datetime.strptime(obj.deadline,"%b %d, %Y %H:%M:%S")
+		# print(deadline)
+	for parkir, waktu in zip_longest(parkir_objek, waktu_objek):
+		now = datetime.datetime.now(pytz.utc)
+		print(waktu.waktu_booking)
+		print(now)
+		if parkir.book_status == True and waktu.waktu_booking <= now:
+			validate_booking.append(1)
+			print('True booking')
+		else:
+			validate_booking.append(0)
+	print(validate_booking)
 	# A2= Parkir.objects.all()
 	# A3= Parkir.objects.all()
 	print(parkir_objek)
+	book_list = list()
+	for validate, book in zip_longest(validate_booking,parkir_objek.values()):
+		book_dict = dict()
+		for key,val in book.items():
+			book_dict[key] = val
+		book_dict['validate'] = validate
+		book_list.append(book_dict)
 	saldo = Saldo.objects.get(user=request.user.id)
+	print(book_list)
 	context = {
 		'title': 'Halaman Utama',
 		'heading': 'Silahkan Booking parkir anda',
 		'subheading': '',
         'icon': 'static/img/iconmobil.png',
 		'icon_x': 'static/img/icon-x.png',
-		'parkir_objek':parkir_objek,
+		'parkir_objek':book_list,
+		'validate_booking': validate_booking,
 		# 'A2':A2,
 		# 'A3':A3,
 		'saldo':saldo,

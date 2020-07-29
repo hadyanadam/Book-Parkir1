@@ -9,44 +9,53 @@
 	var URL ="{% url 'update_time' %}"
 </script>
 {% block content %}
+<div class="alert alert-info d-none" id="notif-booking"></div>
 <div class="container-fluid">
 	<div class="row">
 		<h1 style="margin-bottom: 50px;">Tempat Parkir:</h1>
 	</div>
 	<div class="row">
-	
 	{% for obj in parkir_objek %}
-		
  	<div class="col-md-3">
 			<h2 style="margin-left: 70px">{{obj.booking_place|slice:"5:7"}}</h2>
-			{% if obj.book_status == False %}
-
+			{% if obj.validate == False %}
 				<img src="{{ icon }}" alt="No 1" style="height:200px;width:150px">
-
 			{% else %}
 				<img src="{{ icon_x }}" alt="No 1" style="height:200px;width:150px">
-
 			{% endif %}
-			
 			<br>
-			
-			{% if obj.book_status == False %}
+			{% comment %} {% if obj.book_status == False %}
 			<form method="POST">
-			{% csrf_token %}	
+			{% csrf_token %}
 				<input type="submit" class="btn btn-primary" style="margin-left:35px" name="booking_place" value="{{obj.booking_place}}">
 			</form>
-
 			{% else %}
 				<div class='text-muted'>Sudah dibooking</div>
-			{% endif %}
-			</div>
+			{% endif %}{% endcomment %}
+			</div> 
 	{% endfor %}
 
 	</div>
 </div>
 
 {% endblock content %}
-
+{% block js %}
+<script>
+let cekBooking = setInterval(() => {
+	fetch('/api/parkirs/booking-time')
+		.then(response => response.json())
+		.then(commits => {
+			for(let i=0;i<3;i++){
+				if(commits[i].user == '{{ request.user }}' && commits[i].book_status){
+					console.log('msk')
+					document.getElementById('notif-booking').innerHTML = `Anda telah membooking tempat parkir: ${commits[i].booking_place.slice(5, 7)} Pada ${commits[i].waktu_booking.slice(0,19)}`
+					document.getElementById('notif-booking').classList.remove('d-none')
+				}
+			}
+		})
+}, 2000)
+</script>
+{% endblock js %}
 
 {% block footer%}
 

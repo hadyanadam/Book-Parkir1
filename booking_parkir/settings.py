@@ -85,12 +85,12 @@ WSGI_APPLICATION = 'booking_parkir.wsgi.application'
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 #DEVELOPMENT
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -101,15 +101,15 @@ WSGI_APPLICATION = 'booking_parkir.wsgi.application'
 #     }
 # }
 #PRODUCTION
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skripsiparkir$booking_parkir',
-        'USER': 'skripsiparkir',
-        'PASSWORD': 'adam2579',
-        'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'skripsiparkir$booking_parkir',
+#         'USER': 'skripsiparkir',
+#         'PASSWORD': 'adam2579',
+#         'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

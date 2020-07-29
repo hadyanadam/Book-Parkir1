@@ -30,6 +30,7 @@
             <li class="nav-item"><a class="nav-link btn text-dark btn-warning" href="{% url 'recharge' %}">
               Isi Saldo</a>
             </li>
+            <li class="nav-item"><a class="nav-link text-light btn btn-success" data-toggle="modal" data-target="#bookingModal">Booking</a></li>
             <li class="nav-item"><a class="nav-link text-muted">{{ user.get_username }}</a></li>
             <li class="nav-item"><a class="nav-link text-light"href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>   
             {% else %}
@@ -55,6 +56,48 @@
 	  </div>
 	</div>
 
+<!-- The Modal -->
+<div class="modal" id="bookingModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Silahkan Booking</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="container" style="width: 100%">
+          <form method="POST">
+            <div class="form-group">
+              <label for="form-booking-place">Booking Place :</label>
+              <select class="custom-select" name="booking_place">
+                <option selected>Select Booking Place</option>
+                <option value="Book A1">A1</option>
+                <option value="Book A2">A2</option>
+                <option value="Book A3">A3</option>
+              </select>
+              <label for="form-booking-place">Tanggal Booking :</label>
+              <input type="text" class="form-control" id="datetimepicker1" name="tanggal_booking" value=''>
+            </div>
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Book</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </form>
+        </div>
+      </div>
+{% comment %} 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      </div> {% endcomment %}
+
+    </div>
+  </div>
+</div>
+
+
 	<div class="container-fluid">
 		<div class="container bg-white text-dark shadow "
 		id="myBody" >
@@ -70,6 +113,23 @@
 	</div>
 	
 	{% include 'snippets/Scripts.html' %}
+    <script>
+    $.datetimepicker.setDateFormatter("moment");
+    $(function () {
+      $("#datetimepicker1").datetimepicker({
+        timepicker: true,
+        datetimepicker: true,
+        format: "YYYY-MM-DD HH:mm",
+        step: 5,
+        yearStart: 2019,
+        yearEnd: 2025,
+        // theme: 'dark',
+        });
+    });
+  </script>
+{% block js %}
+{% endblock js %}
+
 </body>
 
 {% block footer%}
