@@ -111,7 +111,7 @@ DATABASES = {
          'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
      }
  }
-#=======
+#====
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -121,18 +121,16 @@ DATABASES = {
 #         'HOST': 'localhost',
 #     }
 # }
-#PRODUCTION
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skripsiparkir$booking_parkir',
-        'USER': 'skripsiparkir',
-        'PASSWORD': 'adam2579',
-        'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
-    }
-}
-#>>>>>>> origin
-
+#PRODUCTIO
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'skripsiparkir$booking_parkir',
+#         'USER': 'skripsiparkir',
+#         'PASSWORD': 'adam2579',
+#         'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
+#     }
+# }
 ## Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
