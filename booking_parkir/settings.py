@@ -91,27 +91,6 @@ WSGI_APPLICATION = 'booking_parkir.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-#<<<<<<< HEAD
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'parkir',
-#        'USER': 'root',
-#        'PASSWORD': '',
-##        'HOST': 'localhost',
-#    }
-#}
-#PRODUCTION
-DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'skripsiparkir$booking_parkir',
-         'USER': 'skripsiparkir',
-         'PASSWORD': 'adam2579',
-         'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
-     }
- }
-#====
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -121,17 +100,18 @@ DATABASES = {
 #         'HOST': 'localhost',
 #     }
 # }
-#PRODUCTIO
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'skripsiparkir$booking_parkir',
-#         'USER': 'skripsiparkir',
-#         'PASSWORD': 'adam2579',
-#         'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
-#     }
-# }
-## Password validation
+#PRODUCTION
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'skripsiparkir$booking_parkir',
+        'USER': 'skripsiparkir',
+        'PASSWORD': 'adam2579',
+        'HOST': 'skripsiparkir.mysql.pythonanywhere-services.com',
+    }
+}
+
+# Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [

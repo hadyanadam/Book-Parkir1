@@ -31,6 +31,12 @@ class ParkirDetailValidation(generics.RetrieveUpdateAPIView):
     permission_classes = ()
     serializer_class= ParkirCustomSerializer
 
+class ParkirDetailValidationList(generics.ListAPIView):
+    queryset = Parkir
+    authentication_classes = ()
+    permission_classes = ()
+    serializer_class= ParkirCustomSerializer
+
 class BookingTimeList(generics.ListAPIView):
     queryset = Parkir.objects.all()
     serializer_class = BookingTimeParkirSerializer
