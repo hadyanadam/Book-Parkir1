@@ -32,7 +32,7 @@ class ParkirDetailValidation(generics.RetrieveUpdateAPIView):
     serializer_class= ParkirCustomSerializer
 
 class ParkirDetailValidationList(generics.ListAPIView):
-    queryset = Parkir
+    queryset = Parkir.objects.all()
     authentication_classes = ()
     permission_classes = ()
     serializer_class= ParkirCustomSerializer
